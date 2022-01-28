@@ -1,0 +1,7 @@
+sqlmodel~=0.0.6
+fastapi
+SQLAlchemy
+uvicorn
+python-dotenv
+psycopg2
+requests
