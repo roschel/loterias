@@ -40,7 +40,7 @@ def sync_lotofacil():
 
     else:
         lotos = []
-        for i in range(last_contest, result.get("concurso") + 1, 1):
+        for i in range(last_contest + 1, result.get("concurso") + 1, 1):
             result = api_loterias.get_result(jogo="lotofacil", concurso=str(i))
 
             loto = Lotofacil(**result).dict(exclude_none=True)
@@ -69,3 +69,84 @@ def get_all():
 def get_by_id(id: str):
     result = postgres.get_by_id(id, Lotofacil)
     return result
+
+
+def number():
+    results: List[Lotofacil] = get_all()
+    quantity_1 = 0
+    quantity_2 = 0
+    quantity_3 = 0
+    quantity_4 = 0
+    quantity_5 = 0
+    quantity_6 = 0
+    quantity_7 = 0
+    quantity_8 = 0
+    quantity_9 = 0
+    quantity_10 = 0
+    quantity_11 = 0
+    quantity_12 = 0
+    quantity_13 = 0
+    quantity_14 = 0
+    quantity_15 = 0
+    quantity_16 = 0
+    quantity_17 = 0
+    quantity_18 = 0
+    quantity_19 = 0
+    quantity_20 = 0
+    quantity_21 = 0
+    quantity_22 = 0
+    quantity_23 = 0
+    quantity_24 = 0
+    quantity_25 = 0
+
+    for x in results:
+        if 1 in x.dezenas:
+            quantity_1 += 1
+        if 2 in x.dezenas:
+            quantity_2 += 1
+        if 3 in x.dezenas:
+            quantity_3 += 1
+        if 4 in x.dezenas:
+            quantity_4 += 1
+        if 5 in x.dezenas:
+            quantity_5 += 1
+        if 6 in x.dezenas:
+            quantity_6 += 1
+        if 7 in x.dezenas:
+            quantity_7 += 1
+        if 8 in x.dezenas:
+            quantity_8 += 1
+        if 9 in x.dezenas:
+            quantity_9 += 1
+        if 10 in x.dezenas:
+            quantity_10 += 1
+        if 11 in x.dezenas:
+            quantity_11 += 1
+        if 12 in x.dezenas:
+            quantity_12 += 1
+        if 13 in x.dezenas:
+            quantity_13 += 1
+        if 14 in x.dezenas:
+            quantity_14 += 1
+        if 15 in x.dezenas:
+            quantity_15 += 1
+        if 16 in x.dezenas:
+            quantity_16 += 1
+        if 17 in x.dezenas:
+            quantity_17 += 1
+        if 18 in x.dezenas:
+            quantity_18 += 1
+        if 19 in x.dezenas:
+            quantity_19 += 1
+        if 20 in x.dezenas:
+            quantity_20 += 1
+        if 21 in x.dezenas:
+            quantity_21 += 1
+        if 22 in x.dezenas:
+            quantity_22 += 1
+        if 23 in x.dezenas:
+            quantity_23 += 1
+        if 24 in x.dezenas:
+            quantity_24 += 1
+        if 25 in x.dezenas:
+            quantity_25 += 1
