@@ -13,7 +13,7 @@ class PostgresRepository:
 
     def get_all(self, model):
         with self.session as session:
-            results = session.exec(select(model)).all()
+            results = session.exec(select(model).order_by(desc(model.concurso))).all()
             return results
 
     def get_by_id(self, id, model):
