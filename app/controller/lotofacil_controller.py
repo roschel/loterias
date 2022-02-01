@@ -9,8 +9,8 @@ loto_controller = APIRouter()
 @loto_controller.get(
     ''
 )
-def find_all():
-    result = get_all()
+def find_all(skip: int = None, limit: int = 100):
+    result = get_all(skip, limit)
     return result
 
 
