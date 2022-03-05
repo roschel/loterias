@@ -36,3 +36,7 @@ class PostgresRepository:
             # session.refresh(model)
 
         return
+
+    def get_by_game(self, game, model):
+        with self.session as session:
+            return session.exec(select(model).where(model.concurso == game)).all()
