@@ -1,10 +1,12 @@
 import random
 import uuid
 
+from fastapi import HTTPException
+
 from database import session
 from repository.postgres import PostgresRepository
-from schemas.my_results import MyResultsIN, MyResults
 from schemas import Lotofacil
+from schemas.my_results import MyResultsIN, MyResults
 
 postgres = PostgresRepository(session=session)
 
@@ -48,6 +50,12 @@ def save_game(game: MyResultsIN):
     if game.name.lower() == 'lotofácil':
         if len(game.numbers) < 15:
             raise ValueError(f"O jogo {game.name} precisar ter pelo menos 15 números")
+
+    results_already_saved = postgres.get_by_game(game=game.concurso, model=MyResults)
+
+    for saved in results_already_saved:
+        if game.numbers == saved.numbers:
+            raise HTTPException(status_code=409, detail="Jogo já existente")
 
     result = get_odd_pair(numbers=game.numbers)
     my_result = MyResults(id=uuid.uuid4(), **result, concurso=game.concurso, name=game.name)
