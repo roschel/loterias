@@ -58,9 +58,11 @@ def sort_game(game: str):
 
 
 def save_game(game: MyResultsIN):
-    if game.name.lower() == "lotofácil":
-        if len(game.numbers) < 15:
-            raise ValueError(f"O jogo {game.name} precisar ter pelo menos 15 números")
+    if len(game.numbers) < values_per_game[game.name]["game_sort"]:
+        raise HTTPException(
+            status_code=400,
+            detail=f"O jogo {game.name} precisar ter pelo menos 15 números",
+        )
 
     results_already_saved = postgres.get_by_game(game=game.concurso, model=MyResults)
 

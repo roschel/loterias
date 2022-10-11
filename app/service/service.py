@@ -35,7 +35,7 @@ def sync_jogo(jogo: str):
         return
 
     if diff == 1:
-        loto = jogo(**result)
+        loto = Jogo(**result, name=jogo)
         loto.data = datetime.strptime(result.get("data"), "%d/%m/%Y")
 
         create_jogo(loto)

@@ -20,8 +20,8 @@ def find_by_id(id: str):
 
 @loto_controller.post("/sync/all/{jogo}")
 def sync_results(background_tasks: BackgroundTasks, jogo: str):
-    background_tasks.add_task(sync_jogo, jogo)
-    return Response(None, status_code=204)
+    result = sync_jogo(jogo=jogo)
+    return result
 
 
 @loto_controller.post("")
