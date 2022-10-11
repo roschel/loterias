@@ -1,1 +1,1 @@
-from .lotofacil import Lotofacil
+from .jogo import Jogo

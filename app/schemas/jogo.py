@@ -6,9 +6,9 @@ from pydantic import validator
 from sqlmodel import Field, SQLModel, Column, ARRAY, INTEGER
 
 
-class Lotofacil(SQLModel, table=True):
+class Jogo(SQLModel, table=True):
     id: Optional[UUID] = Field(default=None, primary_key=True)
-    name: str = Field("Lotofácil", title="Nome do concurso")
+    name: str = Field(None, title="Nome do concurso")
     data: datetime = Field(title="Data e hora do concurso")
     concurso: int = Field(title="Número do concurso")
     dezenas: List[int] = Field(sa_column=Column(ARRAY(INTEGER)))

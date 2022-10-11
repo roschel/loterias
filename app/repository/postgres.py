@@ -2,18 +2,27 @@ from sqlmodel import select, Session, desc
 
 
 class PostgresRepository:
-
     def __init__(self, session: Session):
         self.session = session
 
-    def get_last_contest(self, model):
+    def get_last_contest(self, model, jogo):
         with self.session as session:
-            result = session.exec(select(model.concurso).order_by(desc(model.concurso))).first()
+            result = session.exec(
+                select(model.concurso)
+                .where(model.name == jogo)
+                .order_by(desc(model.concurso))
+            ).first()
             return result
 
-    def get_all(self, model, offset: int, limit: int):
+    def get_all(self, model, offset: int, limit: int, jogo):
         with self.session as session:
-            results = session.exec(select(model).limit(limit).offset(offset).order_by(desc(model.concurso))).all()
+            results = session.exec(
+                select(model)
+                .where(model.name == jogo)
+                .limit(limit)
+                .offset(offset)
+                .order_by(desc(model.concurso))
+            ).all()
             return results
 
     def get_by_id(self, id, model):
