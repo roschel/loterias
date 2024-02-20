@@ -1,4 +1,3 @@
-import csv
 import matplotlib.pyplot as plt
 from database import session
 from repository.postgres import PostgresRepository
