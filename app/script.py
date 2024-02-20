@@ -39,8 +39,11 @@ def numbers_per_game(jogo, skip=None, limit=None):
         24: 0,
         25: 0,
     }
+    par_impar = {'par': 0, 'impar':0}
     x=[]
     heights=[]
+    x_par_impar=[]
+    total_par_impar=[]
     multiplier = 0
     width = 0.25
 
@@ -52,18 +55,31 @@ def numbers_per_game(jogo, skip=None, limit=None):
         resultado_dict = resultado.dict()
         for number in resultado_dict['dezenas']:
             final_result[number] += 1
+            if number %2 == 0:
+                par_impar['par'] += 1
+            else:
+                par_impar['impar'] += 1
 
     for x_coord, y_coord in final_result.items():
         x.append(x_coord)
         heights.append(y_coord)
-
-        offset = width + multiplier
         rects = ax.bar(x_coord, y_coord, label=y_coord)
         ax.bar_label(rects, padding=3)
-        multiplier += 1
     ax.set_title(msg)
     plt.ylim(min(heights), max(heights)+5)
     plt.xticks(x)
+    plt.show()
+
+    fig, ax = plt.subplots(figsize=(17, 8))
+    for cond, value in par_impar.items():
+        x_par_impar.append(cond)
+        total_par_impar.append(value)
+
+        rects = ax.bar(cond, value, label=value)
+        ax.bar_label(rects, padding=3)
+    ax.set_title(msg)
+    plt.ylim(0, max(total_par_impar)+5)
+    plt.xticks(x_par_impar)
     plt.show()
 
 
