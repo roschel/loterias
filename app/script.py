@@ -6,7 +6,12 @@ from schemas import Jogo
 postgres = PostgresRepository(session=session)
 
 
-def numbers_per_game(jogo, skip=None, limit=4000):
+def numbers_per_game(jogo, skip=None, limit=None):
+    msg = 'Todos os jogos'
+
+    if limit:
+        msg = f'Ultimos {limit} jogos'
+
     final_result = {
         1: 0,
         2: 0,
@@ -56,10 +61,11 @@ def numbers_per_game(jogo, skip=None, limit=4000):
         rects = ax.bar(x_coord, y_coord, label=y_coord)
         ax.bar_label(rects, padding=3)
         multiplier += 1
+    ax.set_title(msg)
     plt.ylim(min(heights), max(heights)+5)
     plt.xticks(x)
     plt.show()
 
 
 if __name__ == '__main__':
-    numbers_per_game(jogo="lotofacil")
+    numbers_per_game(jogo="lotofacil", limit=20)
