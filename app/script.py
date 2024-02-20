@@ -49,12 +49,12 @@ def numbers_per_game(jogo, skip=None, limit=4000):
         for number in resultado_dict['dezenas']:
             final_result[number] += 1
 
-    for x_axe, height in final_result.items():
-        x.append(x_axe)
-        heights.append(height)
+    for x_coord, y_coord in final_result.items():
+        x.append(x_coord)
+        heights.append(y_coord)
 
         offset = width + multiplier
-        rects = ax.bar(x_axe, height, label=height)
+        rects = ax.bar(x_coord, y_coord, label=y_coord)
         ax.bar_label(rects, padding=3)
         multiplier += 1
     plt.ylim(min(heights), max(heights)+5)
