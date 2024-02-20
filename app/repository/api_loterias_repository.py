@@ -1,7 +1,7 @@
 import requests
-
-from config import settings
 from fastapi import HTTPException
+
+from settings import settings
 
 
 class ApiLoteriasRepository:

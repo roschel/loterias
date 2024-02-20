@@ -1,7 +1,6 @@
-from fastapi import APIRouter, Response, BackgroundTasks
-
+from fastapi import APIRouter, BackgroundTasks
 from schemas import Jogo
-from service.service import sync_jogo, get_all, get_by_id, create_jogo
+from service.service import create_jogo, get_all, get_by_id, sync_jogo
 
 loto_controller = APIRouter()
 

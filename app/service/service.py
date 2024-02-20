@@ -28,7 +28,8 @@ def sync_jogo(jogo: str):
         results = api_loterias.get_result(jogo=jogo)
 
         lotos = [
-            Jogo(**result, name=jogo).dict(exclude_none=True) for result in results
+            Jogo(**result, name=jogo).dict(exclude_none=True)
+            for result in results
         ]
 
         create_all(lotos)
