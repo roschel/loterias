@@ -17,7 +17,7 @@ def _grafico_barras_total_numeros_por_jogos(msg, numbers):
         heights.append(y_coord)
         rects = ax.bar(x_coord, y_coord, label=y_coord)
         ax.bar_label(rects, padding=3)
-    ax.set_title(msg)
+    ax.set_title('Dezenas por jogos - ' + msg)
     plt.ylim(min(heights), max(heights)+5)
     plt.xticks(x)
     plt.show()
@@ -32,13 +32,12 @@ def _grafico_total_de_pares_e_impares_por_jogo(msg, numbers):
         offset = width * multiplier
         rects = ax.bar(
             concurso, 
-            values, 
-            bottom=5,
+            values,
             label=concurso
         )
         ax.bar_label(rects)
         multiplier += 1
-    ax.set_title(msg)
+    ax.set_title('Pares e Impares - ' + msg)
     ax.set_xticks(label)
     plt.ylim(0, 15)
     plt.show()
