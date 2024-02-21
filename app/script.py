@@ -2,9 +2,54 @@ import matplotlib.pyplot as plt
 from database import session
 from repository.postgres import PostgresRepository
 from schemas import Jogo
+import numpy as np
 
 postgres = PostgresRepository(session=session)
 
+
+def _grafico_barras_total_numeros_por_jogos(msg, numbers):
+    x=[]
+    heights=[]
+
+    fig, ax = plt.subplots(layout='constrained')
+    for x_coord, y_coord in numbers.items():
+        x.append(x_coord)
+        heights.append(y_coord)
+        rects = ax.bar(x_coord, y_coord, label=y_coord)
+        ax.bar_label(rects, padding=3)
+    ax.set_title(msg)
+    plt.ylim(min(heights), max(heights)+5)
+    plt.xticks(x)
+    plt.show()
+
+def _grafico_total_de_pares_e_impares_por_jogo(msg, numbers):
+    x = np.arange(len(numbers.keys()))
+    fig, ax = plt.subplots(layout='constrained')
+    label = tuple(list(numbers.keys()))
+    width = 0.25
+    multiplier = 1
+    for concurso, values in numbers.items():
+        offset = width * multiplier
+        rects = ax.bar(
+            concurso, 
+            values, 
+            bottom=5,
+            label=concurso
+        )
+        ax.bar_label(rects)
+        multiplier += 1
+    ax.set_title(msg)
+    ax.set_xticks(label)
+    plt.ylim(0, 15)
+    plt.show()
+
+
+def _define_msg(limit=None):
+    msg = 'Todos os jogos'
+
+    if limit:
+        msg = f'Ultimos {limit} jogos'
+    return msg
 
 def numbers_per_game(jogo, skip=None, limit=None):
     msg = 'Todos os jogos'
@@ -39,48 +84,27 @@ def numbers_per_game(jogo, skip=None, limit=None):
         24: 0,
         25: 0,
     }
-    par_impar = {'par': 0, 'impar':0}
-    x=[]
-    heights=[]
-    x_par_impar=[]
-    total_par_impar=[]
-    multiplier = 0
-    width = 0.25
-
-    fig, ax = plt.subplots(figsize=(17, 8))
+    par_impar_por_jogo={}
 
     resultados = postgres.get_all(Jogo, skip, limit, jogo)
 
     for resultado in resultados:
         resultado_dict = resultado.dict()
+        concurso = resultado_dict['concurso']
+        par = 0
+        impar = 0
+
         for number in resultado_dict['dezenas']:
             final_result[number] += 1
-            if number %2 == 0:
-                par_impar['par'] += 1
+            if number % 2 == 0:
+                par += 1
             else:
-                par_impar['impar'] += 1
+                impar += 1
+        par_impar_por_jogo[concurso] = [par, impar]
 
-    for x_coord, y_coord in final_result.items():
-        x.append(x_coord)
-        heights.append(y_coord)
-        rects = ax.bar(x_coord, y_coord, label=y_coord)
-        ax.bar_label(rects, padding=3)
-    ax.set_title(msg)
-    plt.ylim(min(heights), max(heights)+5)
-    plt.xticks(x)
-    plt.show()
+    _grafico_barras_total_numeros_por_jogos(msg, final_result)
 
-    fig, ax = plt.subplots(figsize=(17, 8))
-    for cond, value in par_impar.items():
-        x_par_impar.append(cond)
-        total_par_impar.append(value)
-
-        rects = ax.bar(cond, value, label=value)
-        ax.bar_label(rects, padding=3)
-    ax.set_title(msg)
-    plt.ylim(0, max(total_par_impar)+5)
-    plt.xticks(x_par_impar)
-    plt.show()
+    _grafico_total_de_pares_e_impares_por_jogo(msg, par_impar_por_jogo)
 
 
 if __name__ == '__main__':
