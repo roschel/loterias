@@ -23,24 +23,17 @@ def _grafico_barras_total_numeros_por_jogos(msg, numbers):
     plt.show()
 
 def _grafico_total_de_pares_e_impares_por_jogo(msg, numbers):
-    x = np.arange(len(numbers.keys()))
     fig, ax = plt.subplots(layout='constrained')
-    label = tuple(list(numbers.keys()))
-    width = 0.25
-    multiplier = 1
+    linha_par = []
+    linha_impar = []
+    label = []
+    print(numbers)
     for concurso, values in numbers.items():
-        offset = width * multiplier
-        rects = ax.bar(
-            concurso, 
-            values,
-            label=concurso
-        )
-        ax.bar_label(rects)
-        multiplier += 1
+        rects = ax.bar(concurso, values)
+        ax.bar_label(rects, padding=3)
     ax.set_title('Pares e Impares - ' + msg)
-    ax.set_xticks(label)
-    plt.ylim(0, 15)
-    plt.show()
+    plt.show() 
+
 
 
 def _define_msg(limit=None):
@@ -107,4 +100,4 @@ def numbers_per_game(jogo, skip=None, limit=None):
 
 
 if __name__ == '__main__':
-    numbers_per_game(jogo="lotofacil", limit=20)
+    numbers_per_game(jogo="lotofacil", skip=0, limit=5)
