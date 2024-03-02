@@ -33,9 +33,13 @@ def _grafico_total_de_pares_e_impares_por_jogo(msg, numbers):
     pares = list(df.T[0])
     impares = list(df.T[1])
 
-    bar_width = 0.25
+    bar_width = 0.35
     par_bar = ax.bar(indx - bar_width/2, pares, bar_width, label="par")
-    imapr_bar = ax.bar(indx + bar_width/2, impares, bar_width, label="impar")
+    ax.bar_label(par_bar, label_type='center')
+    impar_bar = ax.bar(indx + bar_width/2, impares, bar_width, label="impar")
+    ax.bar_label(impar_bar, label_type='center')
+
+    ax.legend(loc='upper right')
     
     ax.set_xticks(indx + bar_width, list(numbers.keys()))
     ax.set_title('Pares e Impares dos ' + msg)
