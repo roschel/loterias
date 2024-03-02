@@ -9,3 +9,5 @@ gunicorn
 pymongo
 mongoengine
 matplotlib
+pandas
+numpy
